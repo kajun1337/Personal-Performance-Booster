@@ -56,14 +56,12 @@ class MouseMovementThread(QThread):
         pyautogui.FAILSAFE = False
         center_x, center_y = pyautogui.size()[0] // 2, pyautogui.size()[1] // 2
         radius = min(center_x, center_y) // 2
-        for i in range(1000):
-            if self.isInterruptionRequested():
-                break
+        while not self.isInterruptionRequested(): ##Donguyu for'dan while'a cektik
             angle = random.uniform(0, 2 * 3.14159)
             x = int(center_x + radius * math.cos(angle))
             y = int(center_y + radius * math.sin(angle))
             pyautogui.moveTo(x, y, duration=0.25)
-            time.sleep(1)
+            QThread.sleep(3) #time-sleep yeriine Qı 3 e cıkarıp hareketler arası bekleme suresını arttırdık
 
     def stop(self):
         self.requestInterruption()
